@@ -200,7 +200,7 @@ public class UpdateClass extends Frame implements WindowListener , ActionListene
 			System.out.println(name	);
 			Human h = null;
 			try {
-				h = a.process(name);
+//				h = a.process(name);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
