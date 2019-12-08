@@ -103,7 +103,7 @@ public class DeleteClass extends Frame implements WindowListener , ActionListene
 		
 		
 		setSize(640, 500);
-		setLocation(100, 100);
+		setLocation(350, 150);
 		addWindowListener(this);
 		setVisible(true);
 		

@@ -3,57 +3,50 @@ package sources;
 import java.util.Scanner;
 
 
-public class Update implements DaoInterface {
+public class Update {
 
-	Scanner sc = new Scanner(System.in);
 	Singleton singleton;
 	
-	public Update() throws Exception {
+	public Update() {
+		
+	}
+	
+	
+	public boolean process(String[] str) {
 		singleton = Singleton.getInstance();
-	}
-	
-	
-	public void process() {
-		System.out.println("수정하고 싶은 선수명을 입력해주십시오.");
-		System.out.print(">> ");
-		String name = sc.next();
-		Human getHuman = singleton.getMap().get(name);
-		if(getHuman == null || getHuman.getName().equals("")) {
-			System.out.println("데이터를 찾을 수 없습니다.");
-			return;
+		if( str == null) {
+			return false;
 		}
-		
-		System.out.println("수정할 데이터를 입력하시오.");
+		Human getHuman = singleton.getMap().get(str[1]);
+		try {
 		if( getHuman.getNumber() < 2000 )  {	// 투수
-			Pitcher p = (Pitcher)getHuman;
-			System.out.println("승 : ");
-			int win = sc.nextInt();
-			System.out.println("패 : ");
-			int lose = sc.nextInt();
-			System.out.println("방어율 : ");
-			double defence = sc.nextDouble();
-			
-			p.setWin(win);
-			p.setLose(lose);
-			p.setDefence(defence);
+			getHuman.setAge(Integer.parseInt(str[2]));
+			getHuman.setHeight(Double.parseDouble(str[3]));
+			getHuman.setBday(str[4]);
+			((Pitcher)getHuman).setWin(Integer.parseInt(str[5]));
+			((Pitcher)getHuman).setLose(Integer.parseInt(str[6]));
+			((Pitcher)getHuman).setDefence(Double.parseDouble(str[7]));
+	
+		
+		
 		}else {	// 타자
-			Batter b = (Batter)getHuman;
-			System.out.println("타수 : ");
-			int batcount = sc.nextInt();
-			System.out.println("안타수 : ");
-			int hitcount = sc.nextInt();
-			System.out.println("타율 : ");
-			double hitAvg = sc.nextDouble();
+//			Batter b = (Batter)getHuman;
+			getHuman.setAge(Integer.parseInt(str[2]));
+			getHuman.setHeight(Double.parseDouble(str[3]));
+			getHuman.setBday(str[4]);
+			((Batter)getHuman).setBatcount(Integer.parseInt(str[5]));
+			((Batter)getHuman).setHitcount(Integer.parseInt(str[6]));
+			((Batter)getHuman).setHitAvg(Double.parseDouble(str[7]));
 			
-			b.setBatcount(batcount);
-			b.setHitcount(hitcount);
-			b.setHitAvg(hitAvg);
+		}
+
+		singleton.getMap().replace(getHuman.getName(),getHuman);
+		return true;
+	}catch(Exception e){
+			return false;
 		}
 		
-		System.out.println("데이터를 수정했습니다.");
-		singleton.getMap().put(getHuman.getName(), getHuman);
-		
-	}
+		}
 	
 	
 	

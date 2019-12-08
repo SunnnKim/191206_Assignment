@@ -21,11 +21,6 @@ public class Singleton {
 	// 생성자
 	private Singleton() {
 		map = new HashMap<String, Human>();
-		Human h1 =new Pitcher(1000, "선수1", 22, 170, "95/12/12", 10, 5, 0.5);
-		Human h2 =new Batter(2001, "선수2", 22, 170, "97/11/20", 5, 15, 2.55);
-		
-		map.put(h1.getName(), h1);
-		map.put(h2.getName(), h2);
 	}
 
 	// getter / setter

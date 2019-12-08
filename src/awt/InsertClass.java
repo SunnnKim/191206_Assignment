@@ -3,10 +3,9 @@ package awt;
 import java.awt.Button;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
-import java.awt.FlowLayout;
+import java.awt.Choice;
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.TextField;
@@ -21,36 +20,52 @@ import javax.swing.JOptionPane;
 
 import sources.Insert;
 
-public class InsertClass  extends Frame implements WindowListener, ActionListener{
+public class InsertClass  extends Frame 
+				implements WindowListener, ActionListener, ItemListener{
 	
 	Label label[];
 	TextField txt[];
 	Button menu, add;
 	Checkbox pit, bat;
+	Choice year,month,day;
+	int w=0;
 	
 	public InsertClass() {
 		// TODO Auto-generated constructor stub
 		
-		setLayout(new GridLayout(10,1));
+		setLayout(null);
 		
 		Label mainLabel = new Label("< 선수 추가 >");
 		mainLabel.setAlignment(Label.CENTER);
+		mainLabel.setBounds(0, 10, 640, 80);
 		mainLabel.setFont(new Font(null, Font.BOLD, 30));
 		add(mainLabel);
+		
+		
+		Panel select = new Panel();
+		select.setBounds(0, 90, 640, 30);
+		CheckboxGroup g = new CheckboxGroup();
+		pit = new Checkbox("타자", true, g);
+		bat = new Checkbox("투수", false, g);
+		select.add(pit);
+		select.add(bat);
+		add(select);
+		
+		
 		
 		Panel p[] = new Panel[7];
 		for (int i = 0; i < p.length; i++) {
 			p[i] = new Panel();
-			p[i].setBounds(10, 10, 600, 100);
-//			add(p[i]);
+			p[i].setLayout(null);
+			p[i].setBounds(0, 125+(i*45), 640, 40);
+//			p[i].setBackground(Color.darkGray);
+			
 		}
 		
 		label = new Label[7];
-		txt = new TextField[7];
+		txt = new TextField[6];
 		
-		for (int j = 0; j < p.length; j++) {
-			label[j] = new Label();
-		}
+		
 		
 		label[0] = new Label("이름 :");
 		label[1] = new Label("나이 :");
@@ -60,33 +75,56 @@ public class InsertClass  extends Frame implements WindowListener, ActionListene
 		label[5] = new Label("안타수 :");
 		label[6] = new Label("타율 :");
 		
+		year = new Choice();
 		
-		Panel select = new Panel();
-		CheckboxGroup g = new CheckboxGroup();
-		pit = new Checkbox("타자", true, g);
-		bat = new Checkbox("투수", false, g);
-		select.add(pit);
-		select.add(bat);
-		add(select);
-		
-		
-		for (int i = 0; i < label.length; i++) {
-			label[i].setBounds(10, 10, 30, 30);
-			txt[i] = new TextField(30);
-
-			p[i].add(label[i]);
-			p[i].add(txt[i]);
-			add(p[i]);
+		year.add("---");
+		for (int i = 1960; i <= 2010; i++) {
+			year.add(i+"");
 		}
+		month = new Choice();
+		month.add("---");
+
+		day = new Choice();
+		day.add("---");
+		
+		
+
+		// 레이블 추가 
+		int w=0;
+		for (int j = 0; j < p.length; j++) {
+			label[j].setSize(80, 30);
+			label[j].setLocation(150, 0);
+			label[j].setAlignment(Label.RIGHT);
+			p[j].add(label[j]);
+			add(p[j]);
+			if(j==3) continue;
+			txt[w] = new TextField(30);
+			txt[w].setBounds(240, 0, 200, 30);
+			p[j].add(txt[w]);
+			w++;
+		}
+		
+
+		year.setBounds(240, 0, 90, 30);
+		month.setBounds(330, 0, 80, 30);
+		day.setBounds(410, 0, 80, 30);
+		year.addItemListener(this);
+		month.addItemListener(this);
+		day.addItemListener(this);
+		
+		p[3].add(year);
+		p[3].add(month);
+		p[3].add(day);
 		
 		
 		Panel addBtd  = new Panel();
-		add(addBtd);
-		addBtd.setSize(600, 200);
+		addBtd.setBounds(0, 400, 640, 100);
+		addBtd.setLayout(null);
 		menu = new Button("메뉴");
-		menu.setSize(200,100);
+		menu.setBounds(200, 45, 100, 40);
 		add = new Button("추가");
 		add.setSize(250,100);
+		add.setBounds(360, 45, 100, 40);
 		
 		
 		menu.addActionListener(this);
@@ -97,6 +135,7 @@ public class InsertClass  extends Frame implements WindowListener, ActionListene
 		
 		addBtd.add(menu);
 		addBtd.add(add);
+		add(addBtd);
 		
 		
 
@@ -134,7 +173,7 @@ public class InsertClass  extends Frame implements WindowListener, ActionListene
 		
 		
 		setSize(640,500);
-		setLocation(100, 100);
+		setLocation(350, 150);
 		addWindowListener(this);
 		setVisible(true);
 	}
@@ -152,8 +191,17 @@ public class InsertClass  extends Frame implements WindowListener, ActionListene
 		
 		// 추가하기
 		String str[] = new String[7];
+		w=0;
 		for (int i = 0; i < str.length; i++) {
-			str[i] = txt[i].getText().trim();
+			str[i] = txt[w].getText().trim();
+			if(i==3) {
+				str[i] = year.getSelectedItem().charAt(2)+"";
+				str[i] += year.getSelectedItem().charAt(3)+"/";
+				str[i] += month.getSelectedItem()+"/";
+				str[i] += day.getSelectedItem();
+				continue;
+			}
+			w++;
 		}
 		Insert a = new Insert();
 		boolean b=false;
@@ -169,8 +217,11 @@ public class InsertClass  extends Frame implements WindowListener, ActionListene
 			JOptionPane.showMessageDialog(null, "선수를 성공적으로 추가했습니다.");
 		}
 		
-		for (int i = 0; i < str.length; i++) {
+		for (int i = 0; i < txt.length; i++) {
 			txt[i].setText("");
+			year.select(0);
+			month.select(0);
+			day.select(0);
 		}
 		txt[0].requestFocus();
 	}
@@ -214,6 +265,45 @@ public class InsertClass  extends Frame implements WindowListener, ActionListene
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	// TODO: 아이템 리스너
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		Choice c = (Choice)e.getSource();
+		
+		if(!year.getSelectedItem().equals("---")) {
+			for (int i = 1; i <= 12; i++) {
+				month.add(i+"");
+			}
+			if(month.getSelectedItem().equals("---")) {
+				day.removeAll();
+				day.add("---");
+			}
+			else if(month.getSelectedItem().equals("2")) {
+				for (int i = 1; i <= 28; i++) 
+					day.add(i+"");
+			}
+			else if( month.getSelectedItem().equals("4")
+					|| month.getSelectedItem().equals("6")
+					|| month.getSelectedItem().equals("9")
+					|| month.getSelectedItem().equals("11")) {
+				for (int i = 1; i <= 30; i++) 
+					day.add(i+"");
+			}
+			else {
+				for (int i = 1; i <= 31; i++) 
+					day.add(i+"");
+			}
+			
+		}else {
+			month.removeAll();
+			day.removeAll();
+			month.add("---");
+			day.add("---");
+			
+		}
 		
 	}
 

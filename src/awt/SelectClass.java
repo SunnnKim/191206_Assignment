@@ -88,7 +88,7 @@ public class SelectClass extends Frame implements WindowListener , ActionListene
 		
 		
 		setSize(640,500);
-		setLocation(100, 100);
+		setLocation(350, 150);
 		addWindowListener(this);
 		setVisible(true);
 	}
@@ -149,6 +149,7 @@ public class SelectClass extends Frame implements WindowListener , ActionListene
 		
 		if(nowBtn == searchBtn) {
 			//검색 버튼일 때
+			printMem.setText("");
 			s = new Select();
 			String name = searchName.getText();
 			Object [] str = s.process(name);

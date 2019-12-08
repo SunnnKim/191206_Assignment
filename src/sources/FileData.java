@@ -16,7 +16,9 @@ public class FileData {
 private File file;
 	
 	public FileData(String filename) {
-		file = new File("d:\\tmp\\"+filename +".txt");
+		
+		// 나중에 여기 바꾸기!!
+		file = new File("/Users/sunjukim/Desktop/tmp/"+filename +".txt");
 		createfile();
 	}
 	

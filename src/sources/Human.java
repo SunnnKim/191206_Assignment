@@ -99,8 +99,11 @@ public class Human {
 
 
 
-	public void setBday(Calendar bday) {
-		this.bday = bday;
+	public void setBday(String bday) {
+		String split[] = bday.split("/");
+		this.bday.set(Calendar.YEAR, Integer.parseInt(split[0]));
+		this.bday.set(Calendar.MONTH, Integer.parseInt(split[1])-1);
+		this.bday.set(Calendar.DATE, Integer.parseInt(split[2]));
 	}
 	
 	
