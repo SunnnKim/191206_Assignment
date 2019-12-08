@@ -163,6 +163,7 @@ public class DeleteClass extends Frame implements WindowListener , ActionListene
 		}
 		if(nowBtn == searchBtn) {
 			//검색 버튼일 때
+			printMem.setText("");
 			s = new Select();
 			String name = searchName.getText();
 			Object [] str = s.process(name);

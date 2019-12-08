@@ -195,11 +195,16 @@ public class InsertClass  extends Frame
 		for (int i = 0; i < str.length; i++) {
 			str[i] = txt[w].getText().trim();
 			if(i==3) {
+				try {
 				str[i] = year.getSelectedItem().charAt(2)+"";
 				str[i] += year.getSelectedItem().charAt(3)+"/";
 				str[i] += month.getSelectedItem()+"/";
 				str[i] += day.getSelectedItem();
 				continue;
+				}catch (Exception e2) {
+					str[i] = null;
+					continue;
+				}
 			}
 			w++;
 		}
