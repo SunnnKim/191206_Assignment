@@ -292,13 +292,6 @@ public class UpdateClass extends Frame
 			return;
 			
 		}
-		
-		
-		
-		
-		
-		
-		
 	}
 
 
@@ -309,15 +302,33 @@ public class UpdateClass extends Frame
 		
 		Choice c = (Choice)e.getSource();
 		
-		if(!year.getSelectedItem().equals("---")) {
-			for (int i = 1; i <= 12; i++) {
-				month.add(i+"");
+		if(c == year) {
+			if(!year.getSelectedItem().equals("---")) {
+				month.removeAll();
+				month.add("---");
+				for (int i = 1; i <= 12; i++) {
+					month.add(i+"");
+				}
 			}
+			else {
+				
+				month.removeAll();
+				day.removeAll();
+				month.add("---");
+				day.add("---");
+				
+			}
+		}
+		
+		if( c == month ) {
+			
 			if(month.getSelectedItem().equals("---")) {
 				day.removeAll();
 				day.add("---");
 			}
 			else if(month.getSelectedItem().equals("2")) {
+				day.removeAll();
+				day.add("---");
 				for (int i = 1; i <= 28; i++) 
 					day.add(i+"");
 			}
@@ -325,22 +336,18 @@ public class UpdateClass extends Frame
 					|| month.getSelectedItem().equals("6")
 					|| month.getSelectedItem().equals("9")
 					|| month.getSelectedItem().equals("11")) {
+				day.removeAll();
+				day.add("---");
 				for (int i = 1; i <= 30; i++) 
 					day.add(i+"");
 			}
 			else {
+				day.removeAll();
+				day.add("---");
 				for (int i = 1; i <= 31; i++) 
 					day.add(i+"");
 			}
-			
-		}else {
-			month.removeAll();
-			day.removeAll();
-			month.add("---");
-			day.add("---");
-			
 		}
-		
 		
 		
 	}
